@@ -3,21 +3,23 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col">Id</th>
+        <th scope="col">#Id</th>
         <th scope="col">Task Name</th>
-        <th scope="col">Completed</th>
+        <th scope="col">Description</th>
         <th scope="col">Date</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="task in Tasks" :key="task._id">
-        <th scope="row">{{ task._id }}</th>
+      <tr v-for="(task, index) in Tasks" :key="task._id">
+        <th scope="row">{{ index + 1 }}</th>
         <td>{{ task.TaskTitle }}</td>
-        <td>{{ task.isCompleted }}</td>
+        <td>{{ task.description }}</td>
         <td>{{ task.date }}</td>
         <td>
-          <button type="button" class="btn btn-primary">Edit</button>
+          <router-link to="/edit ">
+            <button type="button" class="btn btn-primary">Edit</button>
+          </router-link>
           <button type="button" class="btn btn-danger">Delete</button>
         </td>
       </tr>
@@ -42,19 +44,13 @@ export default {
     const getTasks = onMounted(async () => {
       try {
         const response = await axios.get("http://localhost:2400/tasks");
-        console.log(response.data);
         Tasks.value = response.data;
       } catch (error) {
         console.error(error);
       }
     });
 
-    const deleteTask =  async (id) => {
-      const res = await axios.delete(`http://localhost:2400/tasks/${$_id} `)
-      
-    };
-
-    return { Tasks };
+    return { Tasks};
   },
 };
 </script>
